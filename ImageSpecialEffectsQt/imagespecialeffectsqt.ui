@@ -44,7 +44,7 @@
             <number>3</number>
            </property>
            <property name="maximum">
-            <number>100</number>
+            <number>200</number>
            </property>
            <property name="value">
             <number>10</number>
@@ -153,6 +153,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="btnTextImage">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>转字符画...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -202,8 +212,8 @@
    <slot>openFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>765</x>
-     <y>187</y>
+     <x>814</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>
@@ -218,8 +228,8 @@
    <slot>saveFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>788</x>
-     <y>219</y>
+     <x>814</x>
+     <y>212</y>
     </hint>
     <hint type="destinationlabel">
      <x>790</x>
@@ -235,7 +245,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>386</y>
+     <y>367</y>
     </hint>
     <hint type="destinationlabel">
      <x>775</x>
@@ -282,12 +292,28 @@
    <slot>openBalanceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>775</x>
-     <y>402</y>
+     <x>814</x>
+     <y>396</y>
     </hint>
     <hint type="destinationlabel">
      <x>775</x>
      <y>439</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnTextImage</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>openTextImageDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>768</x>
+     <y>415</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>764</x>
+     <y>496</y>
     </hint>
    </hints>
   </connection>
@@ -299,5 +325,6 @@
   <slot>updateSize(int)</slot>
   <slot>undoZoom()</slot>
   <slot>openBalanceDialog()</slot>
+  <slot>openTextImageDialog()</slot>
  </slots>
 </ui>

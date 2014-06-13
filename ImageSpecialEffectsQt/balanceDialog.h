@@ -5,6 +5,8 @@
 #include "ui_balanceDialog.h"
 #include "imagespecialeffectsqt.h"
 
+class ImageSpecialEffectsQt;
+
 class balanceDialog : public QWidget
 {
 	Q_OBJECT

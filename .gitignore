@@ -15,6 +15,13 @@
 *.a
 *.lib
 
+# Debug
+*.tlog
+*.pdb
+*.bsc
+*.ilk
+*.log
+
 # Executables
 *.exe
 *.out
@@ -32,7 +39,8 @@
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*

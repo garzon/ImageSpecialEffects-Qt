@@ -4,6 +4,7 @@ balanceDialog::balanceDialog(ImageSpecialEffectsQt *win,QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
+	this->setAttribute(Qt::WA_DeleteOnClose, true);
 	mainWin=win;
 }
 

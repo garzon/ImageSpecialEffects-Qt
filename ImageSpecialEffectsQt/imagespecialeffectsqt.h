@@ -3,6 +3,11 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_imagespecialeffectsqt.h"
+#include <qfiledialog.h>
+#include <qmessagebox.h>
+#include "myRGB.h"
+#include "balanceDialog.h"
+#include "textImageDialog.h"
 
 class ImageSpecialEffectsQt : public QMainWindow
 {
@@ -13,6 +18,7 @@ public:
 	~ImageSpecialEffectsQt();
 	void updateImage();
 	void balanceRGB(int r,int g,int b);
+	QImage *image,*displayImage;
 public slots:
 	void updateSize(int coeff);
 	void transform(int coeff=-1);
@@ -21,10 +27,10 @@ public slots:
 	void gray();
 	void undoZoom();
 	void openBalanceDialog();
+	void openTextImageDialog();
 private:
 	Ui::ImageSpecialEffectsQtClass ui;
 	bool _isLoaded; double _zoom;
-	QImage *image,*displayImage;
 };
 
 #endif // IMAGESPECIALEFFECTSQT_H

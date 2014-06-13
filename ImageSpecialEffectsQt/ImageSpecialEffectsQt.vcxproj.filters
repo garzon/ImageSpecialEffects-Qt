@@ -59,6 +59,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_balanceDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="textImageDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_textImageDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_textImageDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="imagespecialeffectsqt.h">
@@ -82,16 +91,24 @@
     <CustomBuild Include="GeneratedFiles\ui_balanceDialog.h">
       <Filter>Generated Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="ClassDiagram.cd" />
+    <CustomBuild Include="funclib.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="myRGB.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="textImageDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="textImageDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_textImageDialog.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ImageSpecialEffectsQt.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="myRGB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="funclib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

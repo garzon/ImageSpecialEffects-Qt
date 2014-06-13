@@ -1,8 +1,4 @@
 #include "imagespecialeffectsqt.h"
-#include <qfiledialog.h>
-#include <qmessagebox.h>
-#include "myRGB.h"
-#include "balanceDialog.h"
 
 // --------------- CONSTRUCTOR ---------------------
 
@@ -72,6 +68,7 @@ void ImageSpecialEffectsQt::openFile(){
 	ui.pushButton_3->setEnabled(true);
 	ui.pushButton_2->setEnabled(true);
 	ui.pushButton_5->setEnabled(true);
+	ui.btnTextImage->setEnabled(true);
 	_isLoaded=true;
 	transform();
 }
@@ -85,10 +82,7 @@ void ImageSpecialEffectsQt::gray(){
 	long x,y,w=image->width(),h=image->height();
 	for(x=0;x<w;x++){
 		for(y=0;y<h;y++){
-			myRGB sum;
-			sum+=image->pixel(x,y);
-			sum.vmul(0.3,0.59,0.11);
-			long avg=sum.r+sum.g+sum.b;
+			int avg=myRGB::toGray(image->pixel(x,y));
 			image->setPixel(x,y,qRgb(avg,avg,avg));
 		}
 	}
@@ -105,6 +99,11 @@ void ImageSpecialEffectsQt::undoZoom(){
 
 void ImageSpecialEffectsQt::openBalanceDialog(){
 	balanceDialog *w=new balanceDialog(this);
+	w->show();
+}
+
+void ImageSpecialEffectsQt::openTextImageDialog(){
+	textImageDialog *w=new textImageDialog(this);
 	w->show();
 }
 

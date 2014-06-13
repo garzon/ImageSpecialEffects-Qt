@@ -47,6 +47,7 @@ public:
     QSpacerItem *verticalSpacer_2;
     QPushButton *pushButton_2;
     QPushButton *pushButton_5;
+    QPushButton *btnTextImage;
     QSpacerItem *verticalSpacer_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -82,7 +83,7 @@ public:
         horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
         horizontalSlider->setEnabled(false);
         horizontalSlider->setMinimum(3);
-        horizontalSlider->setMaximum(100);
+        horizontalSlider->setMaximum(200);
         horizontalSlider->setValue(10);
         horizontalSlider->setTracking(false);
         horizontalSlider->setOrientation(Qt::Horizontal);
@@ -142,6 +143,12 @@ public:
 
         verticalLayout_2->addWidget(pushButton_5);
 
+        btnTextImage = new QPushButton(horizontalLayoutWidget);
+        btnTextImage->setObjectName(QStringLiteral("btnTextImage"));
+        btnTextImage->setEnabled(false);
+
+        verticalLayout_2->addWidget(btnTextImage);
+
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
@@ -168,6 +175,7 @@ public:
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), ImageSpecialEffectsQtClass, SLOT(updateSize(int)));
         QObject::connect(pushButton_4, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(undoZoom()));
         QObject::connect(pushButton_5, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(openBalanceDialog()));
+        QObject::connect(btnTextImage, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(openTextImageDialog()));
 
         QMetaObject::connectSlotsByName(ImageSpecialEffectsQtClass);
     } // setupUi
@@ -182,6 +190,7 @@ public:
         pushButton_3->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\345\217\246\345\255\230\344\270\272\345\233\276\345\203\217...", 0));
         pushButton_2->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\351\273\221\347\231\275", 0));
         pushButton_5->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\350\211\262\345\275\251\345\271\263\350\241\241...", 0));
+        btnTextImage->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\350\275\254\345\255\227\347\254\246\347\224\273...", 0));
     } // retranslateUi
 
 };
