@@ -5,6 +5,11 @@
 #include <qimage.h>
 #include <cmath>
 
+#define PI 3.14159265
+
+template <typename T>
+class D2Array;
+
 template <typename T>
 T inline imax(T a,T b){
 	if(a>b) return a; else return b;
@@ -15,7 +20,10 @@ T inline imin(T a,T b){
 	if(a<b) return a; else return b;
 }
 
+D2Array<long> * clustering(const D2Array<double> *image,long clusterNum,long clusterTimes);
 D2Array<long> * clustering(const QImage *image,long clusterNum,long clusterTimes);
+
+D2Array<double> * noLightness(const QImage * image);
 
 QImage * transform(const QImage *image,double zoom);
 
