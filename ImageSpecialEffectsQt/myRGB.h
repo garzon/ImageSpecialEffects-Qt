@@ -1,5 +1,7 @@
 #ifndef MYRGB_H
-#define MYRGB_h
+#define MYRGB_H
+
+#include <qrgb.h>
 
 class myRGB{
 public:

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "ui_textImageDialog.h"
 #include "imagespecialeffectsqt.h"
+#include "funclib.h"
 
 class ImageSpecialEffectsQt;
 

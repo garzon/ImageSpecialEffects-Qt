@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="balanceDialog.cpp" />
+    <ClCompile Include="funclib.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_balanceDialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -178,6 +179,7 @@
     </ClCompile>
     <ClCompile Include="imagespecialeffectsqt.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="myRGB.cpp" />
     <ClCompile Include="textImageDialog.cpp" />
   </ItemGroup>
   <ItemGroup>

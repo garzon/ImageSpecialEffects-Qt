@@ -6,6 +6,7 @@
 #include <qfiledialog.h>
 #include <qmessagebox.h>
 #include "myRGB.h"
+#include "funclib.h"
 #include "balanceDialog.h"
 #include "textImageDialog.h"
 
@@ -21,10 +22,11 @@ public:
 	QImage *image,*displayImage;
 public slots:
 	void updateSize(int coeff);
-	void transform(int coeff=-1);
+	void transformDisplayImage(int coeff=-1);
 	void openFile();
 	void saveFile();
-	void gray();
+	void doGray();
+	void doEdgeDetection();
 	void undoZoom();
 	void openBalanceDialog();
 	void openTextImageDialog();

@@ -163,6 +163,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_6">
+         <property name="text">
+          <string>边缘检测</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -213,7 +220,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>183</y>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>
@@ -229,7 +236,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>212</y>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
      <x>790</x>
@@ -241,15 +248,15 @@
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
    <receiver>ImageSpecialEffectsQtClass</receiver>
-   <slot>gray()</slot>
+   <slot>doGray()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>367</y>
+     <y>348</y>
     </hint>
     <hint type="destinationlabel">
-     <x>775</x>
-     <y>367</y>
+     <x>776</x>
+     <y>290</y>
     </hint>
    </hints>
   </connection>
@@ -293,7 +300,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>396</y>
+     <y>377</y>
     </hint>
     <hint type="destinationlabel">
      <x>775</x>
@@ -308,8 +315,8 @@
    <slot>openTextImageDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>768</x>
-     <y>415</y>
+     <x>814</x>
+     <y>406</y>
     </hint>
     <hint type="destinationlabel">
      <x>764</x>
@@ -317,14 +324,31 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>doEdgeDetection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>769</x>
+     <y>424</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>765</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openFile()</slot>
   <slot>saveFile()</slot>
-  <slot>gray()</slot>
+  <slot>doGray()</slot>
   <slot>updateSize(int)</slot>
   <slot>undoZoom()</slot>
   <slot>openBalanceDialog()</slot>
   <slot>openTextImageDialog()</slot>
+  <slot>doEdgeDetection()</slot>
  </slots>
 </ui>

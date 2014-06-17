@@ -16,7 +16,7 @@ void ImageSpecialEffectsQt::updateImage(){
 	ui.label->setPixmap(QPixmap::fromImage(*displayImage));
 }
 
-void ImageSpecialEffectsQt::transform(int coeff){
+void ImageSpecialEffectsQt::transformDisplayImage(int coeff){
 	delete displayImage; double zoom;
 	if(coeff==-1){
 		zoom=_zoom;
@@ -24,22 +24,7 @@ void ImageSpecialEffectsQt::transform(int coeff){
 		zoom=coeff/10.0;
 		_zoom=zoom;
 	}
-	long x,y,i,j,w=(long)(image->width()/zoom),h=(long)(image->height()/zoom);
-	displayImage=new QImage(w,h,QImage::Format::Format_ARGB32);
-	for(x=0;x<w;x++){
-		for(y=0;y<h;y++){
-			long b=(long)(x*zoom),c=(long)(y*zoom);
-			myRGB sum; long area=0;
-			for(i=b;i<b+zoom;i++){
-				for(j=c;j<c+zoom;j++){
-					sum+=image->pixel(i,j);
-					area++;
-				}
-			}
-			sum/=area;
-			displayImage->setPixel(x,y,sum.toQRGB());
-		}
-	}
+	displayImage=transform(image,zoom);
 	updateImage();
 }
 
@@ -55,7 +40,7 @@ void ImageSpecialEffectsQt::balanceRGB(int r,int g,int b){
 			image->setPixel(x,y,sum.toQRGB());
 		}
 	}
-	transform();
+	transformDisplayImage();
 }
 
 // ------------ SLOTS -----------------
@@ -70,7 +55,7 @@ void ImageSpecialEffectsQt::openFile(){
 	ui.pushButton_5->setEnabled(true);
 	ui.btnTextImage->setEnabled(true);
 	_isLoaded=true;
-	transform();
+	transformDisplayImage();
 }
 
 void ImageSpecialEffectsQt::saveFile(){
@@ -78,19 +63,13 @@ void ImageSpecialEffectsQt::saveFile(){
 	image->save(path);
 }
 
-void ImageSpecialEffectsQt::gray(){
-	long x,y,w=image->width(),h=image->height();
-	for(x=0;x<w;x++){
-		for(y=0;y<h;y++){
-			int avg=myRGB::toGray(image->pixel(x,y));
-			image->setPixel(x,y,qRgb(avg,avg,avg));
-		}
-	}
-	transform();
+void ImageSpecialEffectsQt::doGray(){
+	gray(image);
+	transformDisplayImage();
 }
 
 void ImageSpecialEffectsQt::updateSize(int coeff){
-	transform(coeff);
+	transformDisplayImage(coeff);
 }
 
 void ImageSpecialEffectsQt::undoZoom(){
@@ -107,6 +86,13 @@ void ImageSpecialEffectsQt::openTextImageDialog(){
 	w->show();
 }
 
+void ImageSpecialEffectsQt::doEdgeDetection(){
+	QImage *old=image;
+	image=edgeDetection(image);
+	delete old;
+	transformDisplayImage();
+}
+
 // ------------ DELETE ----------------
 
 ImageSpecialEffectsQt::~ImageSpecialEffectsQt()
@@ -116,3 +102,4 @@ ImageSpecialEffectsQt::~ImageSpecialEffectsQt()
 		delete displayImage;
 	}
 }
+
