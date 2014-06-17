@@ -110,12 +110,11 @@ QImage * gray(const QImage *originalImage){
 	return image;
 }
 
-QString * image2Text(QImage *image,QString *chars){
+QString * image2Text(const QImage *image,QString *chars){
 	QString *tmp=new QString("");
-	/*
 	long n=chars->length();
 	long x,y,z,h=image->height(),w=image->width(),t;
-	D2Array<double> *myImage=RGBImage2HImage(image);
+	D2Array<double> *myImage=noLightness(image);
 	D2Array<long> *arr=clustering(myImage,n,100);
 	for(y=0;y<h;y++){
 		for(x=0;x<w;x++){
@@ -125,7 +124,6 @@ QString * image2Text(QImage *image,QString *chars){
 	}
 	delete arr;
 	delete myImage;
-	*/
 	return tmp;
 }
 
@@ -150,19 +148,36 @@ QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes){
 		for(x=0;x<w;x++){
 			res->setPixel(x,y,qRgb(0,0,0));
 			long counter=0; double dis=0;
-			myRGB<> sum(image->pixel(x,y));
+			double self=(*myImage)[y][x];
 			for(z=0;z<4;z++){
 				xx=x; yy=y;
 				getNeighborByDir(z,xx,yy,w,h);
 				if((*arr)[y][x]!=(*arr)[yy][xx]){
-					dis+=sum.distance(image->pixel(xx,yy));
+					dis+=abs(self-(*myImage)[yy][xx]);
 					counter++;
 				}
 			}
 			if(counter!=0){
 				dis/=counter;
-				if(dis>400){
+				if(dis>3.3){
 					res->setPixel(x,y,qRgb(255,255,255));
+				}
+			}
+		}
+	}
+	for(y=0;y<h;y++){
+		for(x=0;x<w;x++){
+			if(res->pixel(x,y)==qRgb(255,255,255)){
+				long counter=0;
+				for(z=0;z<4;z++){
+					xx=x; yy=y;
+					getNeighborByDir(z,xx,yy,w,h);
+					if(res->pixel(xx,yy)!=qRgb(255,255,255)){
+						counter++;
+					}
+				};
+				if(counter>2){
+					res->setPixel(x,y,qRgb(0,0,0));
 				}
 			}
 		}
