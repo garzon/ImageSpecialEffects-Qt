@@ -3,6 +3,7 @@
 
 #include "myRGB.h"
 #include <qimage.h>
+#include <cmath>
 
 template <typename T>
 T inline imax(T a,T b){
@@ -14,12 +15,17 @@ T inline imin(T a,T b){
 	if(a<b) return a; else return b;
 }
 
-long **clustering(QImage *image,long n,long clusteringTimes=50);
+D2Array<long> * clustering(const QImage *image,long clusterNum,long clusterTimes);
 
-QImage * transform(QImage *image,double zoom);
+QImage * transform(const QImage *image,double zoom);
 
-void gray(QImage *image);
+int toGray(const QRgb &c);
+QImage * gray(const QImage *image);
 
-QImage *edgeDetection(QImage * image);
+QString * image2Text(QImage *image,QString *chars);
+
+QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes);
+
+void getNeighborByDir(long dir,long &x,long &y,long maxx,long maxy);
 
 #endif

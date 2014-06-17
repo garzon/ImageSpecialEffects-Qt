@@ -5,6 +5,7 @@
 #include "ui_imagespecialeffectsqt.h"
 #include <qfiledialog.h>
 #include <qmessagebox.h>
+#include <qdebug.h>
 #include "myRGB.h"
 #include "funclib.h"
 #include "balanceDialog.h"
@@ -19,6 +20,7 @@ public:
 	~ImageSpecialEffectsQt();
 	void updateImage();
 	void balanceRGB(int r,int g,int b);
+	QString * image2Text(QString *chars);
 	QImage *image,*displayImage;
 public slots:
 	void updateSize(int coeff);

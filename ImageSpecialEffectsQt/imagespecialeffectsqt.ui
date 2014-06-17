@@ -164,6 +164,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_6">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>边缘检测</string>
          </property>

@@ -2,10 +2,12 @@
 #define MYRGB_H
 
 #include <qrgb.h>
+#include <qimage.h>
 
+template <typename T=long long>
 class myRGB{
 public:
-	long long r,g,b;
+	T r,g,b;
 	myRGB(){
 		r=0;g=0;b=0;
 	}
@@ -15,17 +17,7 @@ public:
 		g=qGreen(tmp);
 		b=qBlue(tmp);
 	}
-	static int toGray(const QRgb &c){
-		myRGB sum(c);
-		sum.vmul(0.3,0.59,0.11);
-		int res=sum.r+sum.g+sum.b;
-		return res;
-	}
-	void randomize(){
-		r=rand()%256;
-		g=rand()%256;
-		b=rand()%256;
-	}
+	void randomize(){}
 	void clear(){
 		r=g=b=0;
 	}
@@ -36,19 +28,32 @@ public:
 		res+=(b-qBlue(c))*(b-qBlue(c));
 		return res;
 	}
-	myRGB& operator +=(const QRgb & tmp){
+	T distance(const myRGB<T> &c){
+		T res=0;
+		res+=(r-c.r)*(r-c.r);
+		res+=(g-c.g)*(g-c.g);
+		res+=(b-c.b)*(b-c.b);
+		return res;
+	}
+	myRGB<T>& operator +=(const QRgb & tmp){
 		r+=qRed(tmp); 
 		g+=qGreen(tmp);
 		b+=qBlue(tmp);
 		return *this;
 	}
-	myRGB& operator +=(const myRGB & tmp){
+	myRGB<T>& operator +=(const myRGB<T> & tmp){
 		r+=tmp.r;
 		g+=tmp.g;
 		b+=tmp.b;
 		return *this;
 	}
-	myRGB& operator /=(long area){
+	myRGB<T>& operator -=(const myRGB<T> & tmp){
+		r-=tmp.r;
+		g-=tmp.g;
+		b-=tmp.b;
+		return *this;
+	}
+	myRGB<T>& operator /=(T area){
 		r/=area; g/=area; b/=area;
 		return *this;
 	}
@@ -65,10 +70,71 @@ public:
 	}
 
 private:
-	void _trim(long long &v){
+	void _trim(T &v){
 		if(v>255) v=255;
 		if(v<0)   v=0;
 	}
+};
+
+template <>
+void myRGB<long long>::randomize(){
+	r=rand()%256;
+	g=rand()%256;
+	b=rand()%256;
+}
+
+template <>
+void myRGB<double>::randomize(){
+	double res=(rand()%6000)*1.0/1000-3;
+	r=res; res=(rand()%6000)*1.0/1000-3;
+	g=res; res=(rand()%6000)*1.0/1000-3;
+	b=res;
+}
+
+template <typename T>
+class D2Array{
+public:
+	T **p; long row,col;
+	D2Array(long _row,long _col):row(_row),col(_col){
+		long y;
+		p=new T* [row];
+		for(y=0;y<row;y++){
+			p[y]=new T [col];
+		}
+	}
+	~D2Array(){
+		long y;
+		for(y=0;y<row;y++){
+			delete [] p[y];
+		}
+		delete [] p;
+	}
+	T * operator [](long y){
+		return p[y];
+	}
+};
+
+template <typename T>
+class myRGBImage:public D2Array<myRGB<T> >{
+public:
+	long h,w;
+	myRGBImage(long _h,long _w):h(_h),w(_w),D2Array<myRGB<T> >(_h,_w){}
+	myRGBImage(const QImage *image):h(image->height()),w(image->width()),D2Array<myRGB<T> >(image->height(),image->width()){
+		long x,y;
+		for(y=0;y<h;y++){
+			for(x=0;x<w;x++){
+				p[y][x]=image->pixel(x,y);
+			}
+		}
+	}
+	myRGB<T> pixel(long x,long y) const{
+		return p[y][x];
+	}
+	void setPixel(long x,long y,const myRGB<T> &pix){
+		p[y][x]=pix;
+	}
+	long height() const { return h; }
+	long width()  const { return w; }
 };
 
 #endif

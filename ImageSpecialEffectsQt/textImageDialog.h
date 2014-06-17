@@ -5,6 +5,7 @@
 #include "ui_textImageDialog.h"
 #include "imagespecialeffectsqt.h"
 #include "funclib.h"
+#include "myRGB.h"
 
 class ImageSpecialEffectsQt;
 

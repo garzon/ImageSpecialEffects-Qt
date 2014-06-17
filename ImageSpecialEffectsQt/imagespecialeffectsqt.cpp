@@ -30,10 +30,10 @@ void ImageSpecialEffectsQt::transformDisplayImage(int coeff){
 
 void ImageSpecialEffectsQt::balanceRGB(int r,int g,int b){
 	long x,y,w=image->width(),h=image->height(); 
-	myRGB delta(r,g,b);
+	myRGB<> delta(r,g,b);
 	for(x=0;x<w;x++){
 		for(y=0;y<h;y++){
-			myRGB sum;
+			myRGB<> sum;
 			sum+=image->pixel(x,y);
 			sum+=delta;
 			sum.trim();
@@ -54,17 +54,20 @@ void ImageSpecialEffectsQt::openFile(){
 	ui.pushButton_2->setEnabled(true);
 	ui.pushButton_5->setEnabled(true);
 	ui.btnTextImage->setEnabled(true);
+	ui.pushButton_6->setEnabled(true);
 	_isLoaded=true;
 	transformDisplayImage();
 }
 
 void ImageSpecialEffectsQt::saveFile(){
-	QString path=QFileDialog::getSaveFileName();;
+	QString path=QFileDialog::getSaveFileName();
 	image->save(path);
 }
 
 void ImageSpecialEffectsQt::doGray(){
-	gray(image);
+	QImage *old=image;
+	image=gray(image);
+	delete old;
 	transformDisplayImage();
 }
 
@@ -87,9 +90,9 @@ void ImageSpecialEffectsQt::openTextImageDialog(){
 }
 
 void ImageSpecialEffectsQt::doEdgeDetection(){
-	QImage *old=image;
-	image=edgeDetection(image);
-	delete old;
+	delete image;
+	image=edgeDetection(displayImage,20,100);
+	undoZoom();
 	transformDisplayImage();
 }
 
