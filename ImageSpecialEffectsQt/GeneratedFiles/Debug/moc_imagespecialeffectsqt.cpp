@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ImageSpecialEffectsQt_t {
-    QByteArrayData data[14];
-    char stringdata[179];
+    QByteArrayData data[16];
+    char stringdata[206];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,18 +37,21 @@ QT_MOC_LITERAL(4, 40, 21),
 QT_MOC_LITERAL(5, 62, 8),
 QT_MOC_LITERAL(6, 71, 8),
 QT_MOC_LITERAL(7, 80, 6),
-QT_MOC_LITERAL(8, 87, 15),
-QT_MOC_LITERAL(9, 103, 13),
-QT_MOC_LITERAL(10, 117, 13),
-QT_MOC_LITERAL(11, 131, 8),
-QT_MOC_LITERAL(12, 140, 17),
-QT_MOC_LITERAL(13, 158, 19)
+QT_MOC_LITERAL(8, 87, 10),
+QT_MOC_LITERAL(9, 98, 15),
+QT_MOC_LITERAL(10, 114, 15),
+QT_MOC_LITERAL(11, 130, 13),
+QT_MOC_LITERAL(12, 144, 13),
+QT_MOC_LITERAL(13, 158, 8),
+QT_MOC_LITERAL(14, 167, 17),
+QT_MOC_LITERAL(15, 185, 19)
     },
     "ImageSpecialEffectsQt\0updateSize\0\0"
     "coeff\0transformDisplayImage\0openFile\0"
-    "saveFile\0doGray\0doEdgeDetection\0"
-    "doNoLightness\0doNoiseReduce\0undoZoom\0"
-    "openBalanceDialog\0openTextImageDialog\0"
+    "saveFile\0doGray\0doBinarize\0doEdgeDetection\0"
+    "doEdgeSmoothing\0doNoLightness\0"
+    "doNoiseReduce\0undoZoom\0openBalanceDialog\0"
+    "openTextImageDialog\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,7 +61,7 @@ static const uint qt_meta_data_ImageSpecialEffectsQt[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,22 +69,26 @@ static const uint qt_meta_data_ImageSpecialEffectsQt[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   74,    2, 0x0a,
-       4,    1,   77,    2, 0x0a,
-       4,    0,   80,    2, 0x2a,
-       5,    0,   81,    2, 0x0a,
-       6,    0,   82,    2, 0x0a,
-       7,    0,   83,    2, 0x0a,
-       8,    0,   84,    2, 0x0a,
-       9,    0,   85,    2, 0x0a,
-      10,    0,   86,    2, 0x0a,
-      11,    0,   87,    2, 0x0a,
-      12,    0,   88,    2, 0x0a,
-      13,    0,   89,    2, 0x0a,
+       1,    1,   84,    2, 0x0a,
+       4,    1,   87,    2, 0x0a,
+       4,    0,   90,    2, 0x2a,
+       5,    0,   91,    2, 0x0a,
+       6,    0,   92,    2, 0x0a,
+       7,    0,   93,    2, 0x0a,
+       8,    0,   94,    2, 0x0a,
+       9,    0,   95,    2, 0x0a,
+      10,    0,   96,    2, 0x0a,
+      11,    0,   97,    2, 0x0a,
+      12,    0,   98,    2, 0x0a,
+      13,    0,   99,    2, 0x0a,
+      14,    0,  100,    2, 0x0a,
+      15,    0,  101,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -107,12 +114,14 @@ void ImageSpecialEffectsQt::qt_static_metacall(QObject *_o, QMetaObject::Call _c
         case 3: _t->openFile(); break;
         case 4: _t->saveFile(); break;
         case 5: _t->doGray(); break;
-        case 6: _t->doEdgeDetection(); break;
-        case 7: _t->doNoLightness(); break;
-        case 8: _t->doNoiseReduce(); break;
-        case 9: _t->undoZoom(); break;
-        case 10: _t->openBalanceDialog(); break;
-        case 11: _t->openTextImageDialog(); break;
+        case 6: _t->doBinarize(); break;
+        case 7: _t->doEdgeDetection(); break;
+        case 8: _t->doEdgeSmoothing(); break;
+        case 9: _t->doNoLightness(); break;
+        case 10: _t->doNoiseReduce(); break;
+        case 11: _t->undoZoom(); break;
+        case 12: _t->openBalanceDialog(); break;
+        case 13: _t->openTextImageDialog(); break;
         default: ;
         }
     }
@@ -143,13 +152,13 @@ int ImageSpecialEffectsQt::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 14;
     }
     return _id;
 }

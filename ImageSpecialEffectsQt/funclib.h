@@ -37,12 +37,15 @@ QImage * transform(const QImage *image,double zoom);
 
 int toGray(const QRgb &c);
 QImage * gray(const QImage *image);
+QImage *binarize(const QImage *originalImage);
 
 QString * image2Text(const QImage *image,QString *chars);
 
 QImage *noiseReduce(const QImage *image);
 //QImage *noiseReduce2(const QImage *image);
 
-QImage *edgeDetection(const QImage * image,long clusterNum=20,long clusterTimes=100);
+QImage *edgeSmoothing(const QImage * image);
+
+QImage *edgeDetection(const QImage * image,long clusterNum=10,long clusterTimes=100);
 
 #endif

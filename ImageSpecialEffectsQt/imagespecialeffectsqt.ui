@@ -133,12 +133,22 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_10">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>黑白化</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="enabled">
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>黑白</string>
+          <string>灰度化</string>
          </property>
         </widget>
        </item>
@@ -193,6 +203,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_9">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>黑白边缘平滑</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -243,7 +263,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>154</y>
+     <y>135</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>
@@ -259,7 +279,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>183</y>
+     <y>164</y>
     </hint>
     <hint type="destinationlabel">
      <x>790</x>
@@ -275,7 +295,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>309</y>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>776</x>
@@ -323,7 +343,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>338</y>
+     <y>319</y>
     </hint>
     <hint type="destinationlabel">
      <x>775</x>
@@ -339,7 +359,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>367</y>
+     <y>348</y>
     </hint>
     <hint type="destinationlabel">
      <x>764</x>
@@ -354,8 +374,8 @@
    <slot>doEdgeDetection()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>769</x>
-     <y>424</y>
+     <x>814</x>
+     <y>406</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>
@@ -371,7 +391,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>396</y>
+     <y>377</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -386,12 +406,44 @@
    <slot>doNoiseReduce()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>748</x>
-     <y>449</y>
+     <x>814</x>
+     <y>435</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
      <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_9</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>doEdgeSmoothing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>801</x>
+     <y>454</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>801</x>
+     <y>477</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_10</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>doBinarize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>757</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>776</x>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -407,5 +459,7 @@
   <slot>doEdgeDetection()</slot>
   <slot>doNoLightness()</slot>
   <slot>doNoiseReduce()</slot>
+  <slot>doEdgeSmoothing()</slot>
+  <slot>doBinarize()</slot>
  </slots>
 </ui>

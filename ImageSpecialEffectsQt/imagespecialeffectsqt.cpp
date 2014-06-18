@@ -57,6 +57,8 @@ void ImageSpecialEffectsQt::openFile(){
 	ui.pushButton_6->setEnabled(true);
 	ui.pushButton_7->setEnabled(true);
 	ui.pushButton_8->setEnabled(true);
+	ui.pushButton_9->setEnabled(true);
+	ui.pushButton_10->setEnabled(true);
 	_isLoaded=true;
 	transformDisplayImage();
 }
@@ -68,6 +70,11 @@ void ImageSpecialEffectsQt::saveFile(){
 
 void ImageSpecialEffectsQt::doNoLightness(){
 	image=caller(noLightnessRGB,image);
+	transformDisplayImage();
+}
+
+void ImageSpecialEffectsQt::doBinarize(){
+	image=caller(binarize,image);
 	transformDisplayImage();
 }
 
@@ -107,6 +114,12 @@ void ImageSpecialEffectsQt::doEdgeDetection(){
 	image=edgeDetection(displayImage);
 	delete old;
 	undoZoom();
+	transformDisplayImage();
+}
+
+void ImageSpecialEffectsQt::doEdgeSmoothing(){
+	image=caller(binarize,image);
+	image=caller(edgeSmoothing,image);
 	transformDisplayImage();
 }
 

@@ -114,6 +114,19 @@ QImage * gray(const QImage *originalImage){
 	return image;
 }
 
+QImage *binarize(const QImage *originalImage){
+	QImage *image=new QImage(*originalImage);
+	long x,y,w=image->width(),h=image->height();
+	for(x=0;x<w;x++){
+		for(y=0;y<h;y++){
+			int avg=toGray(image->pixel(x,y));
+			if(avg>=128) avg=255; else avg=0;
+			image->setPixel(x,y,qRgb(avg,avg,avg));
+		}
+	}
+	return image;
+}
+
 QString * image2Text(const QImage *image,QString *chars){
 	QString *tmp=new QString("");
 	long n=chars->length();
@@ -169,15 +182,45 @@ QImage *noiseReduce(const QImage *image){
 	return myImage;
 }
 
+QImage *edgeSmoothing(const QImage * image){
+	QImage *res=new QImage(*image);
+	long x,y,z,h=image->height(),w=image->width(),xx,yy,counter; 
+	QImage *tmp; QRgb self;
+	long t,flag;
+	for(t=0;t<10;t++){
+		tmp=res;
+		res=new QImage(w,h,QImage::Format::Format_RGB32); 
+		for(y=0;y<h;y++){
+			for(x=0;x<w;x++){
+				counter=0; self=tmp->pixel(x,y);
+				for(z=0;z<4;z++){
+					xx=x; yy=y;
+					getNeighborByDir(z,xx,yy,w,h);
+					if(isNeighbor(x,y,xx,yy)){
+						if(tmp->pixel(xx,yy)!=self){
+							counter++;
+						}
+					}
+				}
+				flag=qRed(self);
+				if(counter>2) flag=256-flag;
+				res->setPixel(x,y,qRgb(flag,flag,flag));
+			}
+		}
+		delete tmp;
+	}
+	return res;
+}
+
 QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes){
-	long x,y,z,h=image->height(),w=image->width(),xx,yy; 
+	long x,y,z,h=image->height(),w=image->width(),xx,yy,counter; 
 	QImage * res=new QImage(w,h,QImage::Format::Format_RGB32);
 	QImage * myImage=noLightnessRGB(image);
 	D2Array<long> *arr=clustering(myImage,clusterNum,clusterTimes);
 	for(y=0;y<h;y++){
 		for(x=0;x<w;x++){
 			res->setPixel(x,y,qRgb(0,0,0));
-			long counter=0; double dis=0;
+			counter=0; double dis=0;
 			myRGB<> self((*myImage).pixel(x,y));
 			for(z=0;z<4;z++){
 				xx=x; yy=y;
@@ -190,66 +233,12 @@ QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes){
 			}
 			if(counter!=0){
 				dis/=counter;
-				if(dis>10){ //3.3
+				if(dis>95){ //3.3
 					res->setPixel(x,y,qRgb(255,255,255));
 				}
 			}
 		}
 	}
-	QImage *tmp;
-	long t,p;
-//for(t=0;t<4;t++){
-	tmp=res;
-	res=new QImage(w,h,QImage::Format::Format_RGB32);
-	for(y=0;y<h;y++){
-		for(x=0;x<w;x++){
-			res->setPixel(x,y,qRgb(255,255,255));
-			if(tmp->pixel(x,y)==qRgb(0,0,0)){
-				long counter=0;
-				for(z=0;z<4;z++){
-					xx=x; yy=y;
-					getNeighborByDir(z,xx,yy,w,h);
-					if(isNeighbor(x,y,xx,yy)){
-						if(tmp->pixel(xx,yy)!=qRgb(0,0,0)){
-							counter++;
-						}
-					}else{
-						counter++;
-					}
-				};
-				if(counter<=3){
-					res->setPixel(x,y,qRgb(0,0,0));
-				}
-			}
-		}
-	}
-//for(p=0;p<2;p++){
-	tmp=res;
-	res=new QImage(w,h,QImage::Format::Format_RGB32);
-	for(y=0;y<h;y++){
-		for(x=0;x<w;x++){
-			res->setPixel(x,y,qRgb(0,0,0));
-			if(tmp->pixel(x,y)==qRgb(255,255,255)){
-				long counter=0;
-				for(z=0;z<4;z++){
-					xx=x; yy=y;
-					getNeighborByDir(z,xx,yy,w,h);
-					if(isNeighbor(x,y,xx,yy)){
-						if(tmp->pixel(xx,yy)!=qRgb(255,255,255)){
-							counter++;
-						}
-					}else{
-						counter++;
-					}
-				};
-				if(counter<=1){
-					res->setPixel(x,y,qRgb(255,255,255));
-				}
-			}
-		}
-	}
-	delete tmp;
-//}//}
 	delete myImage;
 	delete arr;
 	return res;

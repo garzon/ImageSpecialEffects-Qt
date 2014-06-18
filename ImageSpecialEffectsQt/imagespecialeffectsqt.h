@@ -28,7 +28,9 @@ public slots:
 	void openFile();
 	void saveFile();
 	void doGray();
+	void doBinarize();
 	void doEdgeDetection();
+	void doEdgeSmoothing();
 	void doNoLightness();
 	void doNoiseReduce();
 	void undoZoom();
