@@ -47,10 +47,28 @@ public:
 		b+=tmp.b;
 		return *this;
 	}
+	myRGB<T>& operator +=(const double & tmp){
+		r=(T)(r+tmp);
+		g=(T)(g+tmp);
+		b=(T)(b+tmp);
+		return *this;
+	}
 	myRGB<T>& operator -=(const myRGB<T> & tmp){
 		r-=tmp.r;
 		g-=tmp.g;
 		b-=tmp.b;
+		return *this;
+	}
+	myRGB<T>& operator -=(const double & tmp){
+		r=(T)(r-tmp);
+		g=(T)(g-tmp);
+		b=(T)(b-tmp);
+		return *this;
+	}
+	myRGB<T>& operator *=(const double & tmp){
+		r=(T)(r*tmp);
+		g=(T)(g*tmp);
+		b=(T)(b*tmp);
 		return *this;
 	}
 	myRGB<T>& operator /=(T area){
@@ -61,14 +79,22 @@ public:
 		_trim(r); _trim(g); _trim(b);
 	}
 	void vmul(double rr,double gg,double bb){
-		r=(long)(rr*r);
-		g=(long)(gg*g);
-		b=(long)(bb*b);
+		r=(T)(rr*r);
+		g=(T)(gg*g);
+		b=(T)(bb*b);
 	}
-	QRgb toQRGB() const{
-		return qRgb(r,g,b);
+	QRgb toQRGB(){
+		trim();
+		return qRgb(long(r),long(g),long(b));
 	}
-
+	T sum() const{
+		return (r+g+b);
+	}
+	T toGray() const{
+		myRGB tmp(*this);
+		tmp.vmul(0.3,0.59,0.11);
+		return tmp.sum();
+	}
 private:
 	void _trim(T &v){
 		if(v>255) v=255;

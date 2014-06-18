@@ -29,6 +29,8 @@ public slots:
 	void saveFile();
 	void doGray();
 	void doEdgeDetection();
+	void doNoLightness();
+	void doNoiseReduce();
 	void undoZoom();
 	void openBalanceDialog();
 	void openTextImageDialog();

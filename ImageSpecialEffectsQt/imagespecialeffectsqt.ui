@@ -163,12 +163,32 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_7">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>去除亮度</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_6">
          <property name="enabled">
           <bool>false</bool>
          </property>
          <property name="text">
           <string>边缘检测</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_8">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>模糊</string>
          </property>
         </widget>
        </item>
@@ -223,7 +243,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>173</y>
+     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>
@@ -239,7 +259,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>202</y>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>790</x>
@@ -255,7 +275,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>348</y>
+     <y>309</y>
     </hint>
     <hint type="destinationlabel">
      <x>776</x>
@@ -303,7 +323,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>377</y>
+     <y>338</y>
     </hint>
     <hint type="destinationlabel">
      <x>775</x>
@@ -319,7 +339,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>406</y>
+     <y>367</y>
     </hint>
     <hint type="destinationlabel">
      <x>764</x>
@@ -343,6 +363,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_7</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>doNoLightness()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>814</x>
+     <y>396</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>795</x>
+     <y>515</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_8</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>doNoiseReduce()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>748</x>
+     <y>449</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>736</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openFile()</slot>
@@ -353,5 +405,7 @@
   <slot>openBalanceDialog()</slot>
   <slot>openTextImageDialog()</slot>
   <slot>doEdgeDetection()</slot>
+  <slot>doNoLightness()</slot>
+  <slot>doNoiseReduce()</slot>
  </slots>
 </ui>

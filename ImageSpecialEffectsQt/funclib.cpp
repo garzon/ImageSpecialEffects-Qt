@@ -4,37 +4,42 @@ void getNeighborByDir(long dir,long &x,long &y,long maxx,long maxy){
 	switch(dir){
 		case 0:
 			x--;
-			if(x<0) x=maxx-1;
+			if(x<0) x++;
 			break;
 		case 1:
 			x++;
-			if(x==maxx) x=0;
+			if(x==maxx) x--;
 			break;
 		case 2:
 			y--;
-			if(y<0) y=maxy-1;
+			if(y<0) y++;
 			break;
 		case 3:
 			y++;
-			if(y==maxy) y=0;
+			if(y==maxy) y--;
 			break;
 	}
 }
 
-D2Array<long> * clustering(D2Array<double> *image,long clusterNum,long clusterTimes){
+inline bool isNeighbor(long x,long y,long xx,long yy){
+	if(x!=xx) return true;
+	if(y!=yy) return true;
+	return false;
+}
+
+D2Array<long> * clustering(const QImage *image,long clusterNum,long clusterTimes){
 	long n=clusterNum; 
-	const long h=image->row,w=image->col;
+	const long h=image->height(),w=image->width();
 	long x,y,z,t;
-	double *centerPoint=new double[n];
+	myRGB<> *centerPoint=new myRGB<>[n];
 	D2Array<long> *arr=new D2Array<long>(h,w);
 	for(x=0;x<n;x++)
-		centerPoint[x]=(rand()%255000)/1000;
+		centerPoint[x].randomize();
 	for(y=0;y<h;y++){
 		for(x=0;x<w;x++){
-			double mindist=999999999; double tmp;
+			long mindist=999999999,tmp;
 			for(z=0;z<n;z++){
-				tmp=centerPoint[z]-(*image)[y][x];
-				tmp=tmp*tmp;
+				tmp=centerPoint[z].distance(image->pixel(x,y));
 				if(tmp<mindist){
 					mindist=tmp;
 					(*arr)[y][x]=z;
@@ -44,20 +49,19 @@ D2Array<long> * clustering(D2Array<double> *image,long clusterNum,long clusterTi
 	}
 	long *counter=new long[n];
 	for(t=0;t<clusterTimes;t++){
-		for(z=0;z<n;z++){ centerPoint[z]=0; counter[z]=0; }
+		for(z=0;z<n;z++){ centerPoint[z].clear(); counter[z]=0; }
 		for(y=0;y<h;y++){
 			for(x=0;x<w;x++){
 				counter[(*arr)[y][x]]++;
-				centerPoint[(*arr)[y][x]]+=(*image)[y][x];
+				centerPoint[(*arr)[y][x]]+=image->pixel(x,y);
 			}
 		}
-		for(z=0;z<n;z++) if(counter[z]) centerPoint[z]/=counter[z]; else centerPoint[z]=(rand()%255000)/1000;
+		for(z=0;z<n;z++) if(counter[z]) centerPoint[z]/=counter[z]; else centerPoint[z].randomize();
 		for(y=0;y<h;y++){
 			for(x=0;x<w;x++){
-				double mindist=999999999; double tmp;
+				long mindist=999999999,tmp;
 				for(z=0;z<n;z++){
-					tmp=centerPoint[z]-(*image)[y][x];
-					tmp=tmp*tmp;
+					tmp=centerPoint[z].distance(image->pixel(x,y));
 					if(tmp<mindist){
 						mindist=tmp;
 						(*arr)[y][x]=z;
@@ -114,7 +118,7 @@ QString * image2Text(const QImage *image,QString *chars){
 	QString *tmp=new QString("");
 	long n=chars->length();
 	long x,y,z,h=image->height(),w=image->width(),t;
-	D2Array<double> *myImage=noLightness(image);
+	QImage *myImage=noLightnessRGB(image);
 	D2Array<long> *arr=clustering(myImage,n,100);
 	for(y=0;y<h;y++){
 		for(x=0;x<w;x++){
@@ -127,13 +131,39 @@ QString * image2Text(const QImage *image,QString *chars){
 	return tmp;
 }
 
-D2Array<double> * noLightness(const QImage * image){
-	long x,y,h=image->height(),w=image->width();
-	D2Array<double> *myImage=new D2Array<double>(h,w);
+QImage * noLightnessRGB(const QImage *image){
+	long x,y,w=image->width(),h=image->height();
+	QImage *myImage=new QImage(w,h,QImage::Format::Format_RGB32);
+	for(x=0;x<w;x++){
+		for(y=0;y<h;y++){
+			myRGB<double> tmp(image->pixel(x,y));
+			//tmp.vmul(0.7,0.41,0.89);
+			double gray=tmp.toGray();
+			tmp-=gray;
+			tmp*=4.0;
+			tmp+=40.0;
+			myImage->setPixel(x,y,tmp.toQRGB());
+		}
+	}
+	return myImage;
+}
+
+QImage *noiseReduce(const QImage *image){
+	long x,y,z,h=image->height(),w=image->width(),xx,yy,counter;
+	QImage * myImage=new QImage(w,h,QImage::Format_RGB32);
 	for(y=0;y<h;y++){
 		for(x=0;x<w;x++){
-			myRGB<double> tmp(image->pixel(x,y));
-			(*myImage)[y][x]=tmp.r*0.35+tmp.g*0.205+tmp.b*0.445;
+			myRGB<> tmp; counter=0;
+			for(z=0;z<4;z++){
+				xx=x; yy=y;
+				getNeighborByDir(z,xx,yy,w,h);
+				if(isNeighbor(x,y,xx,yy)){
+					tmp+=image->pixel(xx,yy);
+					counter++;
+				}
+			}
+			tmp/=counter;
+			myImage->setPixel(x,y,tmp.toQRGB());
 		}
 	}
 	return myImage;
@@ -142,46 +172,84 @@ D2Array<double> * noLightness(const QImage * image){
 QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes){
 	long x,y,z,h=image->height(),w=image->width(),xx,yy; 
 	QImage * res=new QImage(w,h,QImage::Format::Format_RGB32);
-	D2Array<double> * myImage=noLightness(image);
+	QImage * myImage=noLightnessRGB(image);
 	D2Array<long> *arr=clustering(myImage,clusterNum,clusterTimes);
 	for(y=0;y<h;y++){
 		for(x=0;x<w;x++){
 			res->setPixel(x,y,qRgb(0,0,0));
 			long counter=0; double dis=0;
-			double self=(*myImage)[y][x];
+			myRGB<> self((*myImage).pixel(x,y));
 			for(z=0;z<4;z++){
 				xx=x; yy=y;
 				getNeighborByDir(z,xx,yy,w,h);
+				if(isNeighbor(x,y,xx,yy))
 				if((*arr)[y][x]!=(*arr)[yy][xx]){
-					dis+=abs(self-(*myImage)[yy][xx]);
+					dis+=self.distance((*myImage).pixel(xx,yy));
 					counter++;
 				}
 			}
 			if(counter!=0){
 				dis/=counter;
-				if(dis>3.3){
+				if(dis>10){ //3.3
 					res->setPixel(x,y,qRgb(255,255,255));
 				}
 			}
 		}
 	}
+	QImage *tmp;
+	long t,p;
+//for(t=0;t<4;t++){
+	tmp=res;
+	res=new QImage(w,h,QImage::Format::Format_RGB32);
 	for(y=0;y<h;y++){
 		for(x=0;x<w;x++){
-			if(res->pixel(x,y)==qRgb(255,255,255)){
+			res->setPixel(x,y,qRgb(255,255,255));
+			if(tmp->pixel(x,y)==qRgb(0,0,0)){
 				long counter=0;
 				for(z=0;z<4;z++){
 					xx=x; yy=y;
 					getNeighborByDir(z,xx,yy,w,h);
-					if(res->pixel(xx,yy)!=qRgb(255,255,255)){
+					if(isNeighbor(x,y,xx,yy)){
+						if(tmp->pixel(xx,yy)!=qRgb(0,0,0)){
+							counter++;
+						}
+					}else{
 						counter++;
 					}
 				};
-				if(counter>2){
+				if(counter<=3){
 					res->setPixel(x,y,qRgb(0,0,0));
 				}
 			}
 		}
 	}
+//for(p=0;p<2;p++){
+	tmp=res;
+	res=new QImage(w,h,QImage::Format::Format_RGB32);
+	for(y=0;y<h;y++){
+		for(x=0;x<w;x++){
+			res->setPixel(x,y,qRgb(0,0,0));
+			if(tmp->pixel(x,y)==qRgb(255,255,255)){
+				long counter=0;
+				for(z=0;z<4;z++){
+					xx=x; yy=y;
+					getNeighborByDir(z,xx,yy,w,h);
+					if(isNeighbor(x,y,xx,yy)){
+						if(tmp->pixel(xx,yy)!=qRgb(255,255,255)){
+							counter++;
+						}
+					}else{
+						counter++;
+					}
+				};
+				if(counter<=1){
+					res->setPixel(x,y,qRgb(255,255,255));
+				}
+			}
+		}
+	}
+	delete tmp;
+//}//}
 	delete myImage;
 	delete arr;
 	return res;

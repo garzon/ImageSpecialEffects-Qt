@@ -55,6 +55,8 @@ void ImageSpecialEffectsQt::openFile(){
 	ui.pushButton_5->setEnabled(true);
 	ui.btnTextImage->setEnabled(true);
 	ui.pushButton_6->setEnabled(true);
+	ui.pushButton_7->setEnabled(true);
+	ui.pushButton_8->setEnabled(true);
 	_isLoaded=true;
 	transformDisplayImage();
 }
@@ -64,10 +66,13 @@ void ImageSpecialEffectsQt::saveFile(){
 	image->save(path);
 }
 
+void ImageSpecialEffectsQt::doNoLightness(){
+	image=caller(noLightnessRGB,image);
+	transformDisplayImage();
+}
+
 void ImageSpecialEffectsQt::doGray(){
-	QImage *old=image;
-	image=gray(image);
-	delete old;
+	image=caller(gray,image);
 	transformDisplayImage();
 }
 
@@ -89,9 +94,18 @@ void ImageSpecialEffectsQt::openTextImageDialog(){
 	w->show();
 }
 
+void ImageSpecialEffectsQt::doNoiseReduce(){
+	long i;
+	for(i=0;i<10;i++)
+	image=caller(noiseReduce,image);
+	transformDisplayImage();
+}
+
 void ImageSpecialEffectsQt::doEdgeDetection(){
-	delete image;
-	image=edgeDetection(displayImage,20,100);
+	doNoiseReduce();
+	QImage *old=image;
+	image=edgeDetection(displayImage);
+	delete old;
 	undoZoom();
 	transformDisplayImage();
 }
