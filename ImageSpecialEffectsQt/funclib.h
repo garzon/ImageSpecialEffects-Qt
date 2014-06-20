@@ -27,6 +27,8 @@ T *caller(T* (*f)(const T*),T *a){
 void getNeighborByDir(long dir,long &x,long &y,long maxx,long maxy);
 inline bool isNeighbor(long x,long y,long xx,long yy);
 
+QRgb averageColor(const QImage *image);
+
 //D2Array<long> * clustering(const D2Array<double> *image,long clusterNum,long clusterTimes);
 D2Array<long> * clustering(const QImage *image,long clusterNum,long clusterTimes);
 
@@ -37,7 +39,9 @@ QImage * transform(const QImage *image,double zoom);
 
 int toGray(const QRgb &c);
 QImage * gray(const QImage *image);
-QImage *binarize(const QImage *originalImage);
+QImage * binarize(const QImage *image);
+
+QImage *salience(const QImage *image); 
 
 QString * image2Text(const QImage *image,QString *chars);
 

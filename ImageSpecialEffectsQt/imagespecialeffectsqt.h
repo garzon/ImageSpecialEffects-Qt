@@ -29,6 +29,7 @@ public slots:
 	void saveFile();
 	void doGray();
 	void doBinarize();
+	void doSalience();
 	void doEdgeDetection();
 	void doEdgeSmoothing();
 	void doNoLightness();

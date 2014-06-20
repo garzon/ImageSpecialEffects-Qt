@@ -53,6 +53,7 @@ public:
     QPushButton *pushButton_6;
     QPushButton *pushButton_8;
     QPushButton *pushButton_9;
+    QPushButton *pushButton_11;
     QSpacerItem *verticalSpacer_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -184,6 +185,12 @@ public:
 
         verticalLayout_2->addWidget(pushButton_9);
 
+        pushButton_11 = new QPushButton(horizontalLayoutWidget);
+        pushButton_11->setObjectName(QStringLiteral("pushButton_11"));
+        pushButton_11->setEnabled(false);
+
+        verticalLayout_2->addWidget(pushButton_11);
+
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
@@ -216,6 +223,7 @@ public:
         QObject::connect(pushButton_8, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doNoiseReduce()));
         QObject::connect(pushButton_9, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doEdgeSmoothing()));
         QObject::connect(pushButton_10, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doBinarize()));
+        QObject::connect(pushButton_11, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doSalience()));
 
         QMetaObject::connectSlotsByName(ImageSpecialEffectsQtClass);
     } // setupUi
@@ -236,6 +244,7 @@ public:
         pushButton_6->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\350\276\271\347\274\230\346\243\200\346\265\213", 0));
         pushButton_8->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\346\250\241\347\263\212", 0));
         pushButton_9->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\351\273\221\347\231\275\350\276\271\347\274\230\345\271\263\346\273\221", 0));
+        pushButton_11->setText(QApplication::translate("ImageSpecialEffectsQtClass", "Salience", 0));
     } // retranslateUi
 
 };

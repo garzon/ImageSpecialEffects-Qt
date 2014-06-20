@@ -95,6 +95,12 @@ public:
 		tmp.vmul(0.3,0.59,0.11);
 		return tmp.sum();
 	}
+	void toLab(long &L,long &a,long &b) const{
+		// from http://hao.qinz.net/comments.php?y=08&m=07&entry=entry080727-033517
+		L = (13933 * r + 46871 * g + 4732 * b) >> 16;
+		a = 377 * (14503 * r - 22218 * g + 7714 * b) >> 24 + 128
+		b = 160 * (12773 * r + 39695 * g - 52468 * b) >> 24 + 128
+	}
 private:
 	void _trim(T &v){
 		if(v>255) v=255;

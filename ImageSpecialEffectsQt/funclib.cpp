@@ -1,5 +1,32 @@
 #include "funclib.h"
 
+#define DEFAULTVAR long x,y,w=image->width(),h=image->height();
+#define NEWIMAGE QImage *myImage=new QImage(w,h,QImage::Format::Format_RGB32);
+#define DEFAULTLOOP for(x=0;x<w;x++) for(y=0;y<h;y++)
+
+QRgb averageColor(const QImage *image){
+	DEFAULTVAR;
+	myRGB<> res;
+	for(x=0;x<w;x++){
+		for(y=0;y<h;y++){
+			res+=image->pixel(x,y);
+		}
+	}
+	res/=(h*w);
+	return res.toQRGB();
+}
+
+QImage *salience(const QImage *image){
+	DEFAULTVAR;
+	QRgb avg=averageColor(image);
+	NEWIMAGE;
+	DEFAULTLOOP{
+		long gray=long(myRGB<>(image->pixel(x,y)).distance(avg)/(255));
+		myImage->setPixel(x,y,qRgb(gray,gray,gray));
+	}
+	return myImage;
+}
+
 void getNeighborByDir(long dir,long &x,long &y,long maxx,long maxy){
 	switch(dir){
 		case 0:
@@ -102,29 +129,25 @@ int toGray(const QRgb &c){
 	return res;
 }
 
-QImage * gray(const QImage *originalImage){
-	QImage *image=new QImage(*originalImage);
-	long x,y,w=image->width(),h=image->height();
-	for(x=0;x<w;x++){
-		for(y=0;y<h;y++){
+QImage * gray(const QImage *image){
+	DEFAULTVAR;
+	NEWIMAGE;
+	DEFAULTLOOP{
 			int avg=toGray(image->pixel(x,y));
-			image->setPixel(x,y,qRgb(avg,avg,avg));
-		}
+			myImage->setPixel(x,y,qRgb(avg,avg,avg));
 	}
-	return image;
+	return myImage;
 }
 
-QImage *binarize(const QImage *originalImage){
-	QImage *image=new QImage(*originalImage);
-	long x,y,w=image->width(),h=image->height();
-	for(x=0;x<w;x++){
-		for(y=0;y<h;y++){
+QImage *binarize(const QImage *image){
+	DEFAULTVAR;
+	NEWIMAGE;
+	DEFAULTLOOP{
 			int avg=toGray(image->pixel(x,y));
 			if(avg>=128) avg=255; else avg=0;
-			image->setPixel(x,y,qRgb(avg,avg,avg));
-		}
+			myImage->setPixel(x,y,qRgb(avg,avg,avg));
 	}
-	return image;
+	return myImage;
 }
 
 QString * image2Text(const QImage *image,QString *chars){
@@ -213,7 +236,8 @@ QImage *edgeSmoothing(const QImage * image){
 }
 
 QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes){
-	long x,y,z,h=image->height(),w=image->width(),xx,yy,counter; 
+	long x,y,z,h=image->height(),w=image->width(),xx,yy,counter;
+	image=noLightnessRGB(image);
 	QImage * res=new QImage(w,h,QImage::Format::Format_RGB32);
 	QImage * myImage=noLightnessRGB(image);
 	D2Array<long> *arr=clustering(myImage,clusterNum,clusterTimes);
@@ -239,6 +263,7 @@ QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes){
 			}
 		}
 	}
+	delete image;
 	delete myImage;
 	delete arr;
 	return res;

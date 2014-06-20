@@ -1,5 +1,7 @@
 #include "imagespecialeffectsqt.h"
 
+#define CALLER(funcname) image=caller(funcname,image);transformDisplayImage();
+
 // --------------- CONSTRUCTOR ---------------------
 
 ImageSpecialEffectsQt::ImageSpecialEffectsQt(QWidget *parent)
@@ -59,6 +61,7 @@ void ImageSpecialEffectsQt::openFile(){
 	ui.pushButton_8->setEnabled(true);
 	ui.pushButton_9->setEnabled(true);
 	ui.pushButton_10->setEnabled(true);
+	ui.pushButton_11->setEnabled(true);
 	_isLoaded=true;
 	transformDisplayImage();
 }
@@ -69,18 +72,19 @@ void ImageSpecialEffectsQt::saveFile(){
 }
 
 void ImageSpecialEffectsQt::doNoLightness(){
-	image=caller(noLightnessRGB,image);
-	transformDisplayImage();
+	CALLER(noLightnessRGB);
 }
 
 void ImageSpecialEffectsQt::doBinarize(){
-	image=caller(binarize,image);
-	transformDisplayImage();
+	CALLER(binarize);
 }
 
 void ImageSpecialEffectsQt::doGray(){
-	image=caller(gray,image);
-	transformDisplayImage();
+	CALLER(gray);
+}
+
+void ImageSpecialEffectsQt::doSalience(){
+	CALLER(salience);
 }
 
 void ImageSpecialEffectsQt::updateSize(int coeff){
