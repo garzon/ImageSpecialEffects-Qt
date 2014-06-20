@@ -21,13 +21,14 @@ public:
 	void updateImage();
 	void balanceRGB(int r,int g,int b);
 	QString * image2Text(QString *chars);
-	QImage *image,*displayImage;
+	QImage *image,*displayImage,*lastImage;
 public slots:
 	void updateSize(int coeff);
 	void transformDisplayImage(int coeff=-1);
 	void openFile();
 	void saveFile();
 	void doGray();
+	void doLab();
 	void doBinarize();
 	void doSalience();
 	void doEdgeDetection();
@@ -35,6 +36,7 @@ public slots:
 	void doNoLightness();
 	void doNoiseReduce();
 	void undoZoom();
+	void undo();
 	void openBalanceDialog();
 	void openTextImageDialog();
 private:

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>ImageSpecialEffectsQtClass</class>
  <widget class="QMainWindow" name="ImageSpecialEffectsQtClass">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -104,6 +107,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>打开图像...</string>
          </property>
@@ -116,6 +122,16 @@
          </property>
          <property name="text">
           <string>另存为图像...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_13">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>undo</string>
          </property>
         </widget>
        </item>
@@ -223,6 +239,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_12">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>lab</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -273,7 +299,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>125</y>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>
@@ -289,7 +315,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>154</y>
+     <y>135</y>
     </hint>
     <hint type="destinationlabel">
      <x>790</x>
@@ -305,7 +331,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>280</y>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>776</x>
@@ -353,7 +379,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>309</y>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>775</x>
@@ -369,7 +395,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>338</y>
+     <y>319</y>
     </hint>
     <hint type="destinationlabel">
      <x>764</x>
@@ -385,7 +411,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>396</y>
+     <y>377</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>
@@ -401,7 +427,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>367</y>
+     <y>348</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -417,7 +443,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>425</y>
+     <y>406</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
@@ -432,8 +458,8 @@
    <slot>doEdgeSmoothing()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>801</x>
-     <y>454</y>
+     <x>814</x>
+     <y>435</y>
     </hint>
     <hint type="destinationlabel">
      <x>801</x>
@@ -449,7 +475,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>251</y>
+     <y>232</y>
     </hint>
     <hint type="destinationlabel">
      <x>776</x>
@@ -464,12 +490,44 @@
    <slot>doSalience()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>781</x>
-     <y>473</y>
+     <x>814</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
      <x>748</x>
      <y>527</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_12</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>doLab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>771</x>
+     <y>488</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>727</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_13</sender>
+   <signal>clicked()</signal>
+   <receiver>ImageSpecialEffectsQtClass</receiver>
+   <slot>undo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>802</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>796</x>
+     <y>172</y>
     </hint>
    </hints>
   </connection>
@@ -488,5 +546,7 @@
   <slot>doEdgeSmoothing()</slot>
   <slot>doBinarize()</slot>
   <slot>doSalience()</slot>
+  <slot>doLab()</slot>
+  <slot>undo()</slot>
  </slots>
 </ui>

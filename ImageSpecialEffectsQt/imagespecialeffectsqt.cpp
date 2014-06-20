@@ -1,6 +1,8 @@
 #include "imagespecialeffectsqt.h"
 
-#define CALLER(funcname) image=caller(funcname,image);transformDisplayImage();
+#define caller(funcname,var) { QImage *del=var;var=funcname(var);delete del; }
+#define CALLER(funcname) caller(funcname,image);transformDisplayImage();
+
 
 // --------------- CONSTRUCTOR ---------------------
 
@@ -19,7 +21,8 @@ void ImageSpecialEffectsQt::updateImage(){
 }
 
 void ImageSpecialEffectsQt::transformDisplayImage(int coeff){
-	delete displayImage; double zoom;
+	lastImage=displayImage; ui.pushButton_13->setEnabled(true);
+	double zoom;
 	if(coeff==-1){
 		zoom=_zoom;
 	}else{
@@ -62,8 +65,18 @@ void ImageSpecialEffectsQt::openFile(){
 	ui.pushButton_9->setEnabled(true);
 	ui.pushButton_10->setEnabled(true);
 	ui.pushButton_11->setEnabled(true);
+	ui.pushButton_12->setEnabled(true);
+	ui.pushButton_13->setEnabled(false);
 	_isLoaded=true;
 	transformDisplayImage();
+}
+
+void ImageSpecialEffectsQt::undo(){
+	image=lastImage;
+	lastImage=new QImage();
+	undoZoom();
+	transformDisplayImage();
+	ui.pushButton_13->setEnabled(false);
 }
 
 void ImageSpecialEffectsQt::saveFile(){
@@ -77,6 +90,10 @@ void ImageSpecialEffectsQt::doNoLightness(){
 
 void ImageSpecialEffectsQt::doBinarize(){
 	CALLER(binarize);
+}
+
+void ImageSpecialEffectsQt::doLab(){
+	CALLER(lab);
 }
 
 void ImageSpecialEffectsQt::doGray(){
@@ -108,22 +125,21 @@ void ImageSpecialEffectsQt::openTextImageDialog(){
 void ImageSpecialEffectsQt::doNoiseReduce(){
 	long i;
 	for(i=0;i<10;i++)
-	image=caller(noiseReduce,image);
+		caller(noiseReduce,image);
 	transformDisplayImage();
 }
 
 void ImageSpecialEffectsQt::doEdgeDetection(){
 	doNoiseReduce();
-	QImage *old=image;
+	delete image;
 	image=edgeDetection(displayImage);
-	delete old;
 	undoZoom();
 	transformDisplayImage();
 }
 
 void ImageSpecialEffectsQt::doEdgeSmoothing(){
-	image=caller(binarize,image);
-	image=caller(edgeSmoothing,image);
+	caller(binarize,image);
+	caller(edgeSmoothing,image);
 	transformDisplayImage();
 }
 

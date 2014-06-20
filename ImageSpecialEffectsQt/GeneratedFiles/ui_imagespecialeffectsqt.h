@@ -44,6 +44,7 @@ public:
     QSpacerItem *verticalSpacer;
     QPushButton *pushButton;
     QPushButton *pushButton_3;
+    QPushButton *pushButton_13;
     QSpacerItem *verticalSpacer_2;
     QPushButton *pushButton_10;
     QPushButton *pushButton_2;
@@ -54,6 +55,7 @@ public:
     QPushButton *pushButton_8;
     QPushButton *pushButton_9;
     QPushButton *pushButton_11;
+    QPushButton *pushButton_12;
     QSpacerItem *verticalSpacer_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -63,6 +65,7 @@ public:
     {
         if (ImageSpecialEffectsQtClass->objectName().isEmpty())
             ImageSpecialEffectsQtClass->setObjectName(QStringLiteral("ImageSpecialEffectsQtClass"));
+        ImageSpecialEffectsQtClass->setEnabled(true);
         ImageSpecialEffectsQtClass->resize(821, 578);
         centralWidget = new QWidget(ImageSpecialEffectsQtClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
@@ -124,6 +127,7 @@ public:
 
         pushButton = new QPushButton(horizontalLayoutWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setEnabled(true);
 
         verticalLayout_2->addWidget(pushButton);
 
@@ -132,6 +136,12 @@ public:
         pushButton_3->setEnabled(false);
 
         verticalLayout_2->addWidget(pushButton_3);
+
+        pushButton_13 = new QPushButton(horizontalLayoutWidget);
+        pushButton_13->setObjectName(QStringLiteral("pushButton_13"));
+        pushButton_13->setEnabled(false);
+
+        verticalLayout_2->addWidget(pushButton_13);
 
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -191,6 +201,12 @@ public:
 
         verticalLayout_2->addWidget(pushButton_11);
 
+        pushButton_12 = new QPushButton(horizontalLayoutWidget);
+        pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
+        pushButton_12->setEnabled(false);
+
+        verticalLayout_2->addWidget(pushButton_12);
+
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
@@ -224,6 +240,8 @@ public:
         QObject::connect(pushButton_9, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doEdgeSmoothing()));
         QObject::connect(pushButton_10, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doBinarize()));
         QObject::connect(pushButton_11, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doSalience()));
+        QObject::connect(pushButton_12, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(doLab()));
+        QObject::connect(pushButton_13, SIGNAL(clicked()), ImageSpecialEffectsQtClass, SLOT(undo()));
 
         QMetaObject::connectSlotsByName(ImageSpecialEffectsQtClass);
     } // setupUi
@@ -236,6 +254,7 @@ public:
         label->setText(QApplication::translate("ImageSpecialEffectsQtClass", "No Image", 0));
         pushButton->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\346\211\223\345\274\200\345\233\276\345\203\217...", 0));
         pushButton_3->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\345\217\246\345\255\230\344\270\272\345\233\276\345\203\217...", 0));
+        pushButton_13->setText(QApplication::translate("ImageSpecialEffectsQtClass", "undo", 0));
         pushButton_10->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\351\273\221\347\231\275\345\214\226", 0));
         pushButton_2->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\347\201\260\345\272\246\345\214\226", 0));
         pushButton_5->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\350\211\262\345\275\251\345\271\263\350\241\241...", 0));
@@ -245,6 +264,7 @@ public:
         pushButton_8->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\346\250\241\347\263\212", 0));
         pushButton_9->setText(QApplication::translate("ImageSpecialEffectsQtClass", "\351\273\221\347\231\275\350\276\271\347\274\230\345\271\263\346\273\221", 0));
         pushButton_11->setText(QApplication::translate("ImageSpecialEffectsQtClass", "Salience", 0));
+        pushButton_12->setText(QApplication::translate("ImageSpecialEffectsQtClass", "lab", 0));
     } // retranslateUi
 
 };

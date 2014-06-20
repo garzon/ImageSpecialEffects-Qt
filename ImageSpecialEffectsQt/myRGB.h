@@ -3,6 +3,7 @@
 
 #include <qrgb.h>
 #include <qimage.h>
+#include <qglobal.h>
 
 template <typename T=long long>
 class myRGB{
@@ -97,9 +98,9 @@ public:
 	}
 	void toLab(long &L,long &a,long &b) const{
 		// from http://hao.qinz.net/comments.php?y=08&m=07&entry=entry080727-033517
-		L = (13933 * r + 46871 * g + 4732 * b) >> 16;
-		a = 377 * (14503 * r - 22218 * g + 7714 * b) >> 24 + 128
-		b = 160 * (12773 * r + 39695 * g - 52468 * b) >> 24 + 128
+		L = qRound(0.2126 * r + 0.7152 * g + 0.0722 * b);
+		a = qRound(1.4749 * (0.2213 * r - 0.3390 * g + 0.1177 * b) + 128);
+		b = qRound(0.6245 * (0.1949 * r + 0.6057 * g - 0.8006 * b) + 128); 
 	}
 private:
 	void _trim(T &v){
@@ -168,6 +169,5 @@ public:
 	long height() const { return h; }
 	long width()  const { return w; }
 };
-
 
 #endif
