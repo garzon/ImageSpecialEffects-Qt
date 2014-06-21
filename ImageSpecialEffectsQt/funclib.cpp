@@ -271,17 +271,16 @@ QImage *edgeSmoothing(const QImage * image){
 		for(y=0;y<h;y++){
 			for(x=0;x<w;x++){
 				counter=0; self=tmp->pixel(x,y);
-				if(qRed(self)==255)
+				if(qRed(self)==255) counter++;
 				for(z=0;z<8;z++){
 					xx=x; yy=y;
 					if(getNeighborByDir(z,xx,yy,w,h)){
-						if(tmp->pixel(xx,yy)!=self){
+						if(qRed(tmp->pixel(xx,yy))==255){
 							counter++;
 						}
 					}
 				}
-				flag=qRed(self);
-				if(counter>4) flag=256-flag;
+				if(counter>4) flag=255; else flag=0;
 				res->setPixel(x,y,qRgb(flag,flag,flag));
 			}
 		}
@@ -313,7 +312,7 @@ QImage *edgeDetection(const QImage * image,long clusterNum,long clusterTimes){
 			}
 			if(counter!=0){
 				dis/=counter;
-				if(dis>75){ //3.3
+				if(dis>75){ 
 					res->setPixel(x,y,qRgb(255,255,255));
 				}
 			}
