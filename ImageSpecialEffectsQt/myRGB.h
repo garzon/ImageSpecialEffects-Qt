@@ -96,12 +96,6 @@ public:
 		tmp.vmul(0.3,0.59,0.11);
 		return tmp.sum();
 	}
-	void toLab(long &L,long &a,long &b) const{
-		// from http://hao.qinz.net/comments.php?y=08&m=07&entry=entry080727-033517
-		L = qRound(0.2126 * r + 0.7152 * g + 0.0722 * b);
-		a = qRound(1.4749 * (0.2213 * r - 0.3390 * g + 0.1177 * b) + 128);
-		b = qRound(0.6245 * (0.1949 * r + 0.6057 * g - 0.8006 * b) + 128); 
-	}
 private:
 	void _trim(T &v){
 		if(v>255) v=255;
