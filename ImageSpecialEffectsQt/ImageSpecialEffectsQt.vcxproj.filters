@@ -41,17 +41,20 @@
     <ClCompile Include="imagespecialeffectsqt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="balanceDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="textImageDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="funclib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_imagespecialeffectsqt.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_imagespecialeffectsqt.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\qrc_imagespecialeffectsqt.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="balanceDialog.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_balanceDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -59,17 +62,14 @@
     <ClCompile Include="GeneratedFiles\Release\moc_balanceDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="textImageDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_textImageDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_textImageDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="funclib.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GeneratedFiles\qrc_imagespecialeffectsqt.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,12 +88,6 @@
     <CustomBuild Include="balanceDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="GeneratedFiles\ui_imagespecialeffectsqt.h">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GeneratedFiles\ui_balanceDialog.h">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="ClassDiagram.cd" />
     <CustomBuild Include="funclib.h">
       <Filter>Header Files</Filter>
@@ -107,11 +101,19 @@
     <CustomBuild Include="textImageDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="GeneratedFiles\ui_textImageDialog.h">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ImageSpecialEffectsQt.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_imagespecialeffectsqt.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_balanceDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_textImageDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
